@@ -78,7 +78,6 @@ async def analyze_symbol_and_format(symbol: str) -> str:
     return '\n'.join(text)
 
 async def background_worker(app: Application):
-    await app.start()
     last_sent={}
     while True:
         try:
