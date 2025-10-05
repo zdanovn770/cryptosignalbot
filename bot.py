@@ -137,16 +137,23 @@ async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = "\n".join(lines)
     await update.message.reply_text(text)
 
-def main():
+import asyncio
+
+def build_app():
     if not os.getenv('BOT_TOKEN'):
         raise RuntimeError('BOT_TOKEN not set')
-    app=Application.builder().token(os.getenv('BOT_TOKEN')).build()
-    app.add_handler(CommandHandler('start',lambda u,c: asyncio.create_task(start(u,c))))
-    app.add_handler(CommandHandler('list',lambda u,c: asyncio.create_task(list_symbols(u,c))))
-    app.add_handler(CommandHandler('addpair',lambda u,c: asyncio.create_task(add_symbol(u,c))))
-    app.add_handler(CommandHandler('removepair',lambda u,c: asyncio.create_task(remove_symbol(u,c))))
-    app.add_handler(CommandHandler('status',status_command))
-    async def run(): asyncio.create_task(background_worker(app)); await app.run_polling()
-    asyncio.run(run())
+    app = Application.builder().token(os.getenv('BOT_TOKEN')).build()
+    app.add_handler(CommandHandler('start', lambda u, c: asyncio.create_task(start(u, c))))
+    app.add_handler(CommandHandler('list', lambda u, c: asyncio.create_task(list_symbols(u, c))))
+    app.add_handler(CommandHandler('addpair', lambda u, c: asyncio.create_task(add_symbol(u, c))))
+    app.add_handler(CommandHandler('removepair', lambda u, c: asyncio.create_task(remove_symbol(u, c))))
+    app.add_handler(CommandHandler('status', status_command))
+    return app
 
-if __name__ == "__main"__: main()
+async def main():
+    app = build_app()
+    asyncio.create_task(background_worker(app))
+    await app.run_polling()
+
+if __name__ == "__main__":
+    asyncio.run(main())
