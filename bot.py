@@ -134,8 +134,7 @@ async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             lines.append(f"| {symbol} | {sig} | {ts} |")
         except Exception:
             lines.append(f"| {symbol} | ❌ error | - |")
-    text="
-".join(lines)
+    text = "\n".join(lines)
     await update.message.reply_text(text)
 
 def main():
