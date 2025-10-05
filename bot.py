@@ -75,8 +75,7 @@ async def analyze_symbol_and_format(symbol: str) -> str:
         text.append("⚪ No strong consensus — пропускаем.")
     flags=', '.join([k for k,v in res['signals'].items() if v]) or 'None'
     text.append('Flags: '+flags)
-    return '
-'.join(text)
+    return '\n'.join(text)
 
 async def background_worker(app: Application):
     await app.start()
