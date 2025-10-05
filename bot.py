@@ -149,4 +149,4 @@ def main():
     async def run(): asyncio.create_task(background_worker(app)); await app.run_polling()
     asyncio.run(run())
 
-if __name__=='__main__': main()
+if __name__ == "__main"__: main()
